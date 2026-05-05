@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SKIIP — Skip the Queue. Order Instantly at Events.</title>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: Arial, Helvetica, sans-serif; background: #FAFAF8; color: #0B0F2F; -webkit-font-smoothing: antialiased; }
+  button, input, textarea, select { font-family: inherit; }
+  input:focus, textarea:focus { border-color: #8B5CF6 !important; box-shadow: 0 0 0 3px rgba(139,92,246,0.1); outline: none; }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #F0F0EC; }
+  ::-webkit-scrollbar-thumb { background: #D4D4D0; border-radius: 99px; }
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: none; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-8px); }
+  }
+  .phone-float { animation: float 4s ease-in-out infinite; }
+  @media (max-width: 768px) {
+    .hero-grid     { grid-template-columns: 1fr !important; }
+    .three-col     { grid-template-columns: 1fr !important; }
+    .two-col       { grid-template-columns: 1fr !important; }
+    .four-col      { grid-template-columns: 1fr 1fr !important; }
+    .hide-mobile   { display: none !important; }
+    .footer-grid   { grid-template-columns: 1fr 1fr !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Load components in order -->
+<script type="text/babel" src="skiip-web/utils.jsx"></script>
+<script type="text/babel" src="skiip-web/Nav.jsx"></script>
+<script type="text/babel" src="skiip-web/HomePage.jsx"></script>
+<script type="text/babel" src="skiip-web/Pages.jsx"></script>
+<script type="text/babel" src="skiip-web/HelpGetStarted.jsx"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "startPage": "home"
+}/*EDITMODE-END*/;
+
+function App() {
+  const [page, setPage] = React.useState(() => {
+    try { return JSON.parse(localStorage.getItem('skiip_web_page') || '"home"'); }
+    catch { return TWEAK_DEFAULTS.startPage || 'home'; }
+  });
+  const [editMode, setEditMode] = React.useState(false);
+
+  const navigate = (id) => {
+    setPage(id);
+    localStorage.setItem('skiip_web_page', JSON.stringify(id));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  React.useEffect(() => {
+    const handler = (e) => {
+      if (e.data?.type === '__activate_edit_mode')   setEditMode(true);
+      if (e.data?.type === '__deactivate_edit_mode') setEditMode(false);
+    };
+    window.addEventListener('message', handler);
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    return () => window.removeEventListener('message', handler);
+  }, []);
+
+  const pageMap = {
+    home:       <HomePage       setPage={navigate} />,
+    how:        <HowItWorksPage setPage={navigate} />,
+    experience: <ExperiencePage setPage={navigate} />,
+    vendors:    <VendorsPage    setPage={navigate} />,
+    organisers: <OrganisersPage setPage={navigate} />,
+    help:       <HelpPage />,
+    getstarted: <GetStartedPage setPage={navigate} />,
+  };
+
+  const pages = [
+    { id: 'home',       label: 'Home' },
+    { id: 'how',        label: 'How It Works' },
+    { id: 'experience', label: 'Experience' },
+    { id: 'vendors',    label: 'Vendors' },
+    { id: 'organisers', label: 'Organisers' },
+    { id: 'help',       label: 'Help' },
+    { id: 'getstarted', label: 'Get Started' },
+  ];
+
+  return (
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <Nav currentPage={page} setPage={navigate} />
+      <main style={{ flex: 1, paddingTop: 64 }}>
+        {pageMap[page] || pageMap['home']}
+      </main>
+      <Footer setPage={navigate} />
+
+      {/* Tweaks panel */}
+      {editMode && (
+        <div style={{
+          position: 'fixed', bottom: 20, right: 20, zIndex: 9999,
+          background: '#fff', borderRadius: 18, padding: '18px 20px', width: 220,
+          boxShadow: '0 20px 60px rgba(11,15,47,0.15)', border: '1px solid #E5E5E2',
+        }}>
+          <div style={{ fontSize: 11, fontWeight: 800, color: '#8B5CF6', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>Tweaks</div>
+          <div style={{ fontSize: 11, color: '#94A3B8', fontWeight: 600, marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Navigate to</div>
+          {pages.map(p => (
+            <button key={p.id} onClick={() => navigate(p.id)} style={{
+              display: 'block', width: '100%', marginBottom: 4, padding: '7px 10px',
+              borderRadius: 8, border: 'none', cursor: 'pointer', textAlign: 'left',
+              background: page === p.id ? 'rgba(139,92,246,0.1)' : 'rgba(11,15,47,0.03)',
+              color: page === p.id ? '#8B5CF6' : '#5A6480',
+              fontSize: 12, fontWeight: page === p.id ? 700 : 500,
+              fontFamily: 'Space Grotesk, sans-serif',
+            }}>{p.label}</button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+
+</body>
+</html>
