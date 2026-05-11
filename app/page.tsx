@@ -5,7 +5,7 @@ import { CTA } from "@/components/PageParts";
 const steps = [
   ["01", "Browse Vendors", "See every vendor at your event with live wait times and menus."],
   ["02", "Order & Pay", "Add items, checkout quickly, and get instant confirmation."],
-  ["03", "Get Notified", "Get a clear pickup cue when your order is ready."],
+  ["03", "Track Status", "Get a clear on-screen pickup cue when your order is ready."],
   ["04", "Collect & Enjoy", "Skip the queue, collect from the vendor, and get back to the moment."]
 ];
 
@@ -14,7 +14,7 @@ const audiences = [
     label: "Attendees",
     title: "Stay in the moment",
     href: "/get-started",
-    items: ["Zero queue time", "Order from your spot", "Real-time order tracking", "Pickup notification"]
+    items: ["Zero queue time", "Order from your spot", "Live wait-time indicators", "On-screen pickup status"]
   },
   {
     label: "Vendors",

@@ -496,11 +496,21 @@ img {
 .brand {
   display: inline-flex;
   align-items: center;
+  gap: 9px;
+  color: var(--navy);
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 0;
 }
 
 .brand img {
+  width: 36px;
   height: 36px;
-  width: auto;
+  object-fit: contain;
+}
+
+.brand span {
+  line-height: 1;
 }
 
 .nav-links {
@@ -562,6 +572,22 @@ img {
   background: var(--navy);
   color: #8ba3c7;
   padding: 54px 0 28px;
+}
+
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: white;
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.footer-brand img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
 }
 
 .footer-grid {

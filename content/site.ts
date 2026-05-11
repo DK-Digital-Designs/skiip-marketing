@@ -48,7 +48,7 @@ export const SITE = {
     },
     {
       q: "What payment methods are accepted?",
-      a: "SKIIP is designed for secure card, Apple Pay, and Google Pay checkout when live ordering is enabled."
+      a: "SKIIP is designed for secure card payments when live ordering is enabled."
     },
     {
       q: "How do I become a vendor on SKIIP?",

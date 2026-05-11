@@ -16,7 +16,8 @@ export function Header() {
     <header className="nav">
       <div className="container nav-inner">
         <Link className="brand" href="/" onClick={close} aria-label="SKIIP home">
-          <Image src="/uploads/skiip-logo.png" width={146} height={42} alt="SKIIP" priority />
+          <Image src="/uploads/skiip-logo.png" width={42} height={42} alt="" priority />
+          <span>SKIIP</span>
         </Link>
         <nav className="nav-links" aria-label="Primary navigation">
           {SITE.nav.map((item) => (

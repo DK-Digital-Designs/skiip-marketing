@@ -8,7 +8,10 @@ export function Footer() {
       <div className="container">
         <div className="footer-grid">
           <div>
-            <Image src="/uploads/skiip-logo.png" width={132} height={38} alt="SKIIP" />
+            <div className="footer-brand">
+              <Image src="/uploads/skiip-logo.png" width={38} height={38} alt="" />
+              <span>SKIIP</span>
+            </div>
             <p style={{ maxWidth: 300, lineHeight: 1.7 }}>
               Skip the queues. Order food and drinks instantly at events. No app download required.
             </p>

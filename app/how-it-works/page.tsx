@@ -10,12 +10,12 @@ const steps = [
   {
     title: "Order and pay through the web app",
     body: "Choose your items, confirm the order, and pay quickly when SKIIP is live at your event.",
-    details: ["Apple Pay and Google Pay ready", "No account required", "Secure confirmation flow"]
+    details: ["Secure card payments accepted", "No account required", "Secure confirmation flow"]
   },
   {
-    title: "Get notified when ready",
+    title: "Track your order status",
     body: "Follow order progress on screen and collect only when your order is ready.",
-    details: ["Live preparation tracker", "Pickup status", "Order code for handoff"]
+    details: ["Live preparation tracker", "On-screen pickup status", "Order code for handoff"]
   },
   {
     title: "Collect and get back to the event",
