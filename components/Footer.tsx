@@ -29,7 +29,7 @@ export function Footer() {
         </div>
         <div className="footer-bottom">
           <span>(c) 2026 SKIIP. All rights reserved.</span>
-          <span>Built for live events.</span>
+          <span>Built by <a href="https://dkdigitaldesigns.com" target="_blank" rel="noopener noreferrer" style={{ display: 'inline', color: 'inherit', textDecoration: 'underline' }}>DK DIGITAL</a> for live events.</span>
         </div>
       </div>
     </footer>
