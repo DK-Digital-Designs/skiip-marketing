@@ -18,14 +18,10 @@ export default function VendorsPage() {
     <>
       <PageHero
         eyebrow="For Vendors"
-        title={
-          <>
-            Serve more customers.
-            <br />
-            <span className="green">Without the chaos.</span>
-          </>
-        }
-        lead="SKIIP gives your stall a digital ordering lane so customers order ahead, you fulfil on time, and everyone moves faster."
+        title={<>Your next customer might not join the queue.</>}
+        lead="Join the growing network of vendors using SKIIP to serve faster at live events."
+        primaryHref="/vendor-apply"
+        primaryLabel="Apply Now"
       />
       <section className="section">
         <div className="container">
@@ -65,7 +61,12 @@ export default function VendorsPage() {
           </div>
         </div>
       </section>
-      <CTA title="Ready to serve smarter?" primaryHref="/vendor-apply" primaryLabel="Apply Now" />
+      <CTA
+        title="Your next customer might not join the queue."
+        lead="Join the growing network of vendors using SKIIP to serve faster at live events."
+        primaryHref="/vendor-apply"
+        primaryLabel="Apply Now"
+      />
     </>
   );
 }

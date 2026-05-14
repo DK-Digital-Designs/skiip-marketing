@@ -9,13 +9,50 @@ type Status = { type: "idle" | "success" | "error"; message?: string };
 const deliveryMode = process.env.NEXT_PUBLIC_LEAD_DELIVERY || "mailto";
 const fallbackEmail = process.env.NEXT_PUBLIC_LEAD_EMAIL || "hello@skiip.co";
 
+const vendorEmailFields = [
+  ["Business Name", "businessName"],
+  ["Vendor Type", "vendorType"],
+  ["What you sell", "whatYouSell"],
+  ["Contact Name", "contactName"],
+  ["Email", "email"],
+  ["Phone", "phone"]
+] as const;
+
+const optionalVendorEmailFields = [
+  ["Instagram or website", "instagram"],
+  ["Events", "events"]
+] as const;
+
 function formatSubject(type: LeadType, data: Record<string, FormDataEntryValue>) {
   if (type === "vendor") return `SKIIP vendor application - ${data.businessName || data.contactName || "new lead"}`;
   if (type === "organiser") return `SKIIP organiser enquiry - ${data.organisationName || data.contactName || "new lead"}`;
   return `SKIIP ${data.category || "contact"} enquiry - ${data.name || "new lead"}`;
 }
 
+function fieldValue(data: Record<string, FormDataEntryValue>, key: string) {
+  const value = data[key];
+  return typeof value === "string" ? value.trim() : "";
+}
+
+function formatVendorBody(data: Record<string, FormDataEntryValue>) {
+  const lines = [
+    "Vendor Application",
+    "",
+    ...vendorEmailFields.map(([label, key]) => `${label}: ${fieldValue(data, key)}`),
+    ...optionalVendorEmailFields
+      .map(([label, key]) => [label, fieldValue(data, key)] as const)
+      .filter(([, value]) => value)
+      .map(([label, value]) => `${label}: ${value}`),
+    "",
+    "Sent from the SKIIP website."
+  ];
+
+  return lines.join("\n");
+}
+
 function formatBody(type: LeadType, data: Record<string, FormDataEntryValue>) {
+  if (type === "vendor") return formatVendorBody(data);
+
   const lines = [
     `Lead type: ${type}`,
     "",
@@ -67,7 +104,7 @@ function useLeadForm(type: LeadType) {
             : "Your email app should open with the message ready to send."
       });
     } catch {
-      setStatus({ type: "error", message: "Something went wrong. Please try again." });
+      setStatus({ type: "error", message: "We couldn’t submit this just now. Please check the form and try again." });
     } finally {
       setLoading(false);
     }

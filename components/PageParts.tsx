@@ -3,11 +3,15 @@ import Link from "next/link";
 export function PageHero({
   eyebrow,
   title,
-  lead
+  lead,
+  primaryHref,
+  primaryLabel
 }: {
   eyebrow: string;
   title: React.ReactNode;
   lead: string;
+  primaryHref?: string;
+  primaryLabel?: string;
 }) {
   return (
     <section className="page-hero">
@@ -15,14 +19,21 @@ export function PageHero({
         <span className="eyebrow">{eyebrow}</span>
         <h1 className="title-lg">{title}</h1>
         <p className="lead">{lead}</p>
+        {primaryHref && primaryLabel ? (
+          <div className="button-row" style={{ justifyContent: "center" }}>
+            <Link className="button primary" href={primaryHref}>
+              {primaryLabel}
+            </Link>
+          </div>
+        ) : null}
       </div>
     </section>
   );
 }
 
 export function CTA({
-  title = "Less waiting. More living.",
-  lead = "Free for attendees. No app to download. Just open, order, and get back to the good stuff.",
+  title = "The queue is optional now.",
+  lead = "No apps. No standing around. Just order, track, and collect.",
   primaryHref = "/get-started",
   primaryLabel = "Get Started",
   secondaryHref,

@@ -14,7 +14,7 @@ const audiences = [
     label: "Attendees",
     title: "Stay in the moment",
     href: "/get-started",
-    items: ["Zero queue time", "Order from your spot", "Live wait-time indicators", "On-screen pickup status"]
+    items: ["Zero queue time", "Order from your spot", "Fast & secure checkout", "On-screen pickup status"]
   },
   {
     label: "Vendors",
@@ -65,9 +65,9 @@ export default function HomePage() {
         <div className="container">
           <div style={{ textAlign: "center", marginBottom: 42 }}>
             <span className="eyebrow">How It Works</span>
-            <h2 className="title-lg">Four steps. Less than two minutes.</h2>
+            <h2 className="title-lg">From craving to checkout in just a few taps.</h2>
             <p className="lead" style={{ maxWidth: 620, margin: "0 auto" }}>
-              From hungry to hand-in-order before the next song starts.
+              Order food quickly and spend your time where it matters.
             </p>
           </div>
           <div className="grid-4">

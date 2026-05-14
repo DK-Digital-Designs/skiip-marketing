@@ -5,7 +5,7 @@ const steps = [
   {
     title: "Browse vendors at your event",
     body: "Open SKIIP on any device. See vendors, menus, and clear pickup expectations without downloading an app.",
-    details: ["Food, drinks, and merch", "Live wait-time indicators", "Search by vendor or category"]
+    details: ["Food, drinks, and merch", "Search by vendor", "Real-time menu availability"]
   },
   {
     title: "Order and pay through the web app",
@@ -34,7 +34,7 @@ export default function HowItWorksPage() {
     <>
       <PageHero
         eyebrow="How It Works"
-        title={<>From hungry to collected in under two minutes</>}
+        title={<>From quick checkout to easy collection</>}
         lead="No apps. No accounts. No drama. Here is exactly how SKIIP is designed to work."
       />
       <section className="section">
