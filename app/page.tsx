@@ -57,7 +57,7 @@ export default function HomePage() {
               </Link>
             </div>
           </div>
-          <ProductMockup />
+          <ProductMockup imageSrc="/uploads/skiip-phone-home.jpeg" alt="SKIIP app home screen on mobile" />
         </div>
       </section>
 
@@ -135,7 +135,7 @@ export default function HomePage() {
               <li>Built around fast, secure checkout flows</li>
             </ul>
           </div>
-          <ProductMockup />
+          <ProductMockup imageSrc="/uploads/skiip-phone-menu.jpeg" alt="SKIIP vendor menu screen on mobile" />
         </div>
       </section>
 
