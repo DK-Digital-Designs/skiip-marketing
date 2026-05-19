@@ -1,7 +1,5 @@
-import { createHash } from "crypto";
 import { z } from "zod";
 import { getResend } from "@/lib/resend";
-import { getSupabaseAdmin } from "@/lib/supabase";
 
 type LeadKind = "contact" | "vendor" | "organiser";
 
@@ -44,17 +42,12 @@ const schemas = {
   organiser: organiserSchema
 };
 
-function hashValue(value: string) {
-  const secret = process.env.IP_HASH_SECRET || "local-dev";
-  return createHash("sha256").update(`${secret}:${value}`).digest("hex");
-}
-
-function getClientIp(req: Request) {
-  return req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-}
-
 function genericResponse(status = 200) {
   return Response.json({ ok: status < 400 }, { status });
+}
+
+function fallbackResponse() {
+  return Response.json({ ok: false, fallback: "mailto" }, { status: 200 });
 }
 
 function isAllowedOrigin(req: Request) {
@@ -70,6 +63,93 @@ function isAllowedOrigin(req: Request) {
   } catch {
     return false;
   }
+}
+
+function fieldValue(data: Record<string, unknown>, key: string) {
+  const value = data[key];
+  return typeof value === "string" ? value.trim() : "";
+}
+
+function formatSubject(kind: LeadKind, data: Record<string, unknown>) {
+  if (kind === "vendor") {
+    return `SKIIP vendor application - ${fieldValue(data, "businessName") || fieldValue(data, "contactName") || "new lead"}`;
+  }
+
+  if (kind === "organiser") {
+    return `SKIIP organiser enquiry - ${fieldValue(data, "organisationName") || fieldValue(data, "contactName") || "new lead"}`;
+  }
+
+  return `SKIIP ${fieldValue(data, "category") || "contact"} enquiry - ${fieldValue(data, "name") || "new lead"}`;
+}
+
+function formatLeadEmail(kind: LeadKind, data: Record<string, unknown>) {
+  const fieldsByKind: Record<LeadKind, [string, string][]> = {
+    contact: [
+      ["Category", "category"],
+      ["Name", "name"],
+      ["Email", "email"],
+      ["Message", "message"]
+    ],
+    vendor: [
+      ["Business Name", "businessName"],
+      ["Vendor Type", "vendorType"],
+      ["What you sell", "whatYouSell"],
+      ["Contact Name", "contactName"],
+      ["Email", "email"],
+      ["Phone", "phone"],
+      ["Instagram or website", "instagram"],
+      ["Events", "events"]
+    ],
+    organiser: [
+      ["Organisation Name", "organisationName"],
+      ["Contact Name", "contactName"],
+      ["Email", "email"],
+      ["Event Name", "eventName"],
+      ["Message", "message"]
+    ]
+  };
+
+  const fieldLines = fieldsByKind[kind]
+    .map(([label, key]) => [label, fieldValue(data, key)] as const)
+    .filter(([, value]) => value)
+    .map(([label, value]) => `${label}: ${value}`);
+
+  return [
+    `Lead type: ${kind}`,
+    "",
+    ...fieldLines,
+    "",
+    `Source path: ${fieldValue(data, "sourcePath") || "/"}`,
+    `Referrer: ${fieldValue(data, "referrer") || "none"}`,
+    "",
+    "Sent from the SKIIP website."
+  ].join("\n");
+}
+
+async function sendLeadEmail(kind: LeadKind, data: Record<string, unknown>) {
+  if (process.env.LEAD_DELIVERY !== "resend") return false;
+
+  const to = process.env.LEAD_EMAIL_TO;
+  const from = process.env.LEAD_EMAIL_FROM;
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!to || !from || !apiKey) return false;
+
+  const email = fieldValue(data, "email").toLowerCase();
+  const resend = getResend();
+  const result = await resend.emails.send({
+    from,
+    to,
+    replyTo: email || undefined,
+    subject: formatSubject(kind, data),
+    text: formatLeadEmail(kind, data)
+  });
+
+  if (result.error) {
+    console.error(JSON.stringify({ level: "error", msg: "lead_email_failed", kind, error: result.error.message }));
+    return false;
+  }
+
+  return true;
 }
 
 export async function submitLead(req: Request, kind: LeadKind) {
@@ -91,60 +171,13 @@ export async function submitLead(req: Request, kind: LeadKind) {
   const parsed = schemas[kind].safeParse(payload);
   if (!parsed.success) return genericResponse(400);
 
-  const data = parsed.data;
-  const email = "email" in data ? data.email.toLowerCase() : "";
-  const name = "name" in data ? data.name : "contactName" in data ? data.contactName : "";
-
-  const row = {
-    type: kind,
-    name,
-    email,
-    category: "category" in data ? data.category : null,
-    business_name: "businessName" in data ? data.businessName : null,
-    organisation_name: "organisationName" in data ? data.organisationName : null,
-    phone: "phone" in data ? data.phone : null,
-    message: "message" in data ? data.message : "whatYouSell" in data ? data.whatYouSell : null,
-    source_path: data.sourcePath || null,
-    referrer: data.referrer || null,
-    payload: data,
-    ip_hash: hashValue(getClientIp(req)),
-    user_agent_hash: hashValue(req.headers.get("user-agent") || "unknown"),
-    environment: process.env.VERCEL_ENV || process.env.NODE_ENV || "development"
-  };
-
   try {
-    const supabase = getSupabaseAdmin();
-    const { error } = await supabase.from("leads").insert(row);
-    if (error) {
-      console.error(JSON.stringify({ level: "error", msg: "lead_insert_failed", kind, error: error.message }));
-      return genericResponse(500);
-    }
+    const sent = await sendLeadEmail(kind, parsed.data);
+    return sent ? genericResponse(200) : fallbackResponse();
   } catch (error) {
     console.error(
-      JSON.stringify({ level: "error", msg: "lead_storage_failed", kind, error: error instanceof Error ? error.message : String(error) })
+      JSON.stringify({ level: "error", msg: "lead_delivery_failed", kind, error: error instanceof Error ? error.message : String(error) })
     );
-    return genericResponse(500);
+    return fallbackResponse();
   }
-
-  try {
-    const notifyTo = process.env.LEAD_NOTIFY_EMAIL;
-    if (notifyTo && process.env.RESEND_API_KEY) {
-      const resend = getResend();
-      await resend.emails.send({
-        from: process.env.LEAD_FROM_EMAIL || "SKIIP <onboarding@resend.dev>",
-        to: notifyTo,
-        replyTo: email,
-        subject: `[SKIIP] New ${kind} lead: ${name || email}`,
-        text: Object.entries(row)
-          .map(([key, value]) => `${key}: ${typeof value === "object" ? JSON.stringify(value) : value ?? ""}`)
-          .join("\n")
-      });
-    }
-  } catch (error) {
-    console.error(
-      JSON.stringify({ level: "error", msg: "lead_email_failed", kind, error: error instanceof Error ? error.message : String(error) })
-    );
-  }
-
-  return genericResponse(200);
 }

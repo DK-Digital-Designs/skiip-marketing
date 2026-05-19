@@ -39,6 +39,31 @@ export default function ExperiencePage() {
           </p>
         </div>
       </section>
+      <section className="section mission-vision">
+        <div className="container mission-vision-grid">
+          <div className="mission-vision-card">
+            <span className="eyebrow">Our mission</span>
+            <h2 className="title-md">Give people back the moments they came for.</h2>
+            <p>
+              Every missed goal, every song heard from the food line, every moment spent waiting instead of experiencing
+              – that’s the problem SKIIP exists to solve.
+            </p>
+            <p>
+              We believe live events should feel lived, not queued for.
+            </p>
+          </div>
+          <div className="mission-vision-card">
+            <span className="eyebrow cyan">Our vision</span>
+            <h2 className="title-md">The queue is optional now.</h2>
+            <ul className="vision-list">
+              <li>No more missing the headline act for food</li>
+              <li>Fans in their seats for kick-off</li>
+              <li>Parents present on the sideline</li>
+              <li>Every moment uninterrupted</li>
+            </ul>
+          </div>
+        </div>
+      </section>
       <CTA primaryLabel="Join SKIIP" secondaryHref="/how-it-works" secondaryLabel="See How It Works" />
     </>
   );

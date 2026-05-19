@@ -5,9 +5,9 @@ import { FormEvent, useState } from "react";
 type LeadType = "contact" | "vendor" | "organiser";
 
 type Status = { type: "idle" | "success" | "error"; message?: string };
+type SubmitResult = "sent" | "mailto";
 
-const deliveryMode = process.env.NEXT_PUBLIC_LEAD_DELIVERY || "mailto";
-const fallbackEmail = process.env.NEXT_PUBLIC_LEAD_EMAIL || "hello@skiip.co";
+const fallbackEmail = process.env.NEXT_PUBLIC_LEAD_EMAIL || "hello@skiip.co.uk";
 
 const vendorEmailFields = [
   ["Business Name", "businessName"],
@@ -66,23 +66,35 @@ function formatBody(type: LeadType, data: Record<string, FormDataEntryValue>) {
   return lines.join("\n");
 }
 
-async function submitLead(type: LeadType, form: HTMLFormElement) {
+function openMailtoFallback(type: LeadType, data: Record<string, FormDataEntryValue>) {
+  const subject = encodeURIComponent(formatSubject(type, data));
+  const body = encodeURIComponent(formatBody(type, data));
+  window.location.href = `mailto:${fallbackEmail}?subject=${subject}&body=${body}`;
+}
+
+async function submitLead(type: LeadType, form: HTMLFormElement): Promise<SubmitResult> {
   const data = Object.fromEntries(new FormData(form).entries());
 
-  if (deliveryMode !== "api") {
-    const subject = encodeURIComponent(formatSubject(type, data));
-    const body = encodeURIComponent(formatBody(type, data));
-    window.location.href = `mailto:${fallbackEmail}?subject=${subject}&body=${body}`;
-    return;
+  const fallback = () => {
+    openMailtoFallback(type, data);
+    return "mailto" as const;
+  };
+
+  try {
+    const res = await fetch(`/api/leads/${type}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...data, sourcePath: window.location.pathname, referrer: document.referrer })
+    });
+
+    if (!res.ok) return fallback();
+
+    const result = (await res.json().catch(() => ({}))) as { fallback?: string };
+    if (result.fallback === "mailto") return fallback();
+    return "sent";
+  } catch {
+    return fallback();
   }
-
-  const res = await fetch(`/api/leads/${type}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ ...data, sourcePath: window.location.pathname, referrer: document.referrer })
-  });
-
-  if (!res.ok) throw new Error("Submission failed");
 }
 
 function useLeadForm(type: LeadType) {
@@ -94,12 +106,12 @@ function useLeadForm(type: LeadType) {
     setLoading(true);
     setStatus({ type: "idle" });
     try {
-      await submitLead(type, event.currentTarget);
+      const result = await submitLead(type, event.currentTarget);
       event.currentTarget.reset();
       setStatus({
         type: "success",
         message:
-          deliveryMode === "api"
+          result === "sent"
             ? "Thanks. Your message has been sent."
             : "Your email app should open with the message ready to send."
       });

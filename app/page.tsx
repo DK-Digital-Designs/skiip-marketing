@@ -3,7 +3,7 @@ import { ProductMockup } from "@/components/ProductMockup";
 import { CTA } from "@/components/PageParts";
 
 const steps = [
-  ["01", "Browse Vendors", "See every vendor at your event with live wait times and menus."],
+  ["01", "Browse Vendors", "View menus, available items, and order straight from your phone."],
   ["02", "Order & Pay", "Add items, checkout quickly, and get instant confirmation."],
   ["03", "Track Status", "Get a clear on-screen pickup cue when your order is ready."],
   ["04", "Collect & Enjoy", "Skip the queue, collect from the vendor, and get back to the moment."]

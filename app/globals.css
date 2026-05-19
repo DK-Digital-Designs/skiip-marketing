@@ -136,6 +136,7 @@ img {
   font-size: clamp(38px, 12vw, 72px);
   font-weight: 900;
   line-height: 1.02;
+  max-width: 100%;
 }
 
 .title-lg {
@@ -143,12 +144,14 @@ img {
   font-size: clamp(30px, 8vw, 50px);
   font-weight: 900;
   line-height: 1.08;
+  max-width: 100%;
 }
 
 .title-md {
   margin: 0 0 10px;
   font-size: 21px;
   line-height: 1.28;
+  max-width: 100%;
 }
 
 .lead {
@@ -156,6 +159,8 @@ img {
   color: var(--muted);
   font-size: 17px;
   line-height: 1.72;
+  max-width: 100%;
+  overflow-wrap: break-word;
 }
 
 .muted {
@@ -292,42 +297,11 @@ img {
   background: var(--bg);
 }
 
-.mini-app-header {
-  background: var(--navy);
-  color: white;
-  padding: 22px 14px 18px;
-}
-
-.search-pill {
-  margin-top: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.08);
-  color: #6b82a8;
-  padding: 9px 10px;
-  font-size: 12px;
-}
-
-.vendor-mini {
-  margin: 10px 12px;
-  overflow: hidden;
-  border-radius: 13px;
-  background: white;
-  box-shadow: 0 2px 12px rgba(11, 15, 47, 0.1);
-}
-
-.vendor-art {
-  height: 54px;
-  background: linear-gradient(135deg, rgba(11, 15, 47, 0.88), var(--purple));
-}
-
-.vendor-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 9px 11px;
-  font-size: 11px;
-  font-weight: 800;
+.phone-screenshot {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .floating-card {
@@ -403,6 +377,63 @@ img {
   color: var(--muted);
   font-size: 17px;
   line-height: 1.85;
+}
+
+.mission-vision {
+  background:
+    radial-gradient(ellipse 75% 70% at 15% 0%, rgba(139, 92, 246, 0.22), transparent 62%),
+    linear-gradient(135deg, var(--navy), var(--purple));
+  color: white;
+}
+
+.mission-vision-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.mission-vision-card {
+  height: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 28px;
+}
+
+.mission-vision-card .title-md {
+  margin-top: 18px;
+  color: white;
+  font-size: 28px;
+}
+
+.mission-vision-card p,
+.vision-list {
+  color: #c4d2ec;
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.vision-list {
+  display: grid;
+  gap: 12px;
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0;
+}
+
+.vision-list li {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.vision-list li::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--cyan);
+  box-shadow: 0 0 8px var(--cyan);
 }
 
 .form {
@@ -642,6 +673,24 @@ img {
   line-height: 1.5;
 }
 
+@media (max-width: 520px) {
+  .nav-actions > .button {
+    display: none;
+  }
+
+  .nav-inner {
+    gap: 16px;
+  }
+
+  .title-lg {
+    font-size: 32px;
+  }
+
+  .page-hero .title-lg {
+    font-size: 36px;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .phone {
     animation: phone-float 4s ease-in-out infinite;
@@ -701,6 +750,10 @@ img {
 
   .footer-grid {
     grid-template-columns: 2fr repeat(3, 1fr);
+  }
+
+  .mission-vision-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .cookie {
