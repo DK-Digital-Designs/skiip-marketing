@@ -55,6 +55,9 @@ export default function HomePage() {
               <Link className="button outline" href="/vendors">
                 Sell at Events
               </Link>
+              <a className="button dark" href="https://skiip.co.uk" target="_blank" rel="noopener noreferrer">
+                Check Out the Live App
+              </a>
             </div>
           </div>
           <ProductMockup imageSrc="/uploads/skiip-phone-home.jpeg" alt="SKIIP app home screen on mobile" />

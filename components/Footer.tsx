@@ -20,9 +20,15 @@ export function Footer() {
             <div key={column.title}>
               <h3>{column.title}</h3>
               {column.links.map((link) => (
-                <Link key={link.href} href={link.href}>
-                  {link.label}
-                </Link>
+                link.href.startsWith("http") ? (
+                  <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer">
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link key={link.href} href={link.href}>
+                    {link.label}
+                  </Link>
+                )
               ))}
             </div>
           ))}

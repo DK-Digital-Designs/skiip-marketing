@@ -12,6 +12,10 @@ export const SITE = {
   ],
   footer: [
     {
+      title: "App",
+      links: [{ href: "https://skiip.co.uk", label: "Open SKIIP App" }]
+    },
+    {
       title: "Product",
       links: [
         { href: "/", label: "Home" },
