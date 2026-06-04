@@ -10,23 +10,24 @@ export default function TermsPage() {
         <span className="eyebrow">Terms of Use</span>
         <h1 className="title-lg">SKIIP Terms of Use</h1>
         <p><strong>Effective Date:</strong> May 31, 2026</p>
+        <p>Welcome to SKIIP.</p>
         <p>
-          Welcome to SKIIP. SKIIP is a web-based ordering platform designed for live events. We help attendees
-          browse menus, place orders, pay digitally, and collect food or drinks without spending the event standing
-          in queues.
+          SKIIP is a web-based ordering platform designed for live events. We help attendees browse menus, place
+          orders, pay digitally, and collect food or drinks without spending the event standing in queues.
         </p>
         <p>
-          These Terms of Use ("Terms") govern your use of the SKIIP platform, website, ordering system, and related
-          services ("Platform"). By using SKIIP, placing an order, or accessing the Platform, you agree to these
-          Terms. If you do not agree, please do not use the Platform.
+          These Terms of Use (&quot;Terms&quot;) govern your use of the SKIIP platform, website, ordering system, and
+          related services (&quot;Platform&quot;). By using SKIIP, placing an order, or accessing the Platform, you agree
+          to these Terms. If you do not agree, please do not use the Platform.
         </p>
 
         <h2>1. Who We Are</h2>
         <p>
-          SKIIP Ltd ("SKIIP", "we", "us", "our") operates a digital ordering and collection platform for live events,
-          festivals, venues, and participating vendors. SKIIP is a technology platform only. SKIIP does not prepare,
-          cook, package, store, or deliver food or beverages. Food and drink products available through the Platform
-          are prepared and fulfilled directly by independent vendors operating at the relevant event.
+          SKIIP Ltd (&quot;SKIIP&quot;, &quot;we&quot;, &quot;us&quot;, &quot;our&quot;) operates a digital ordering and
+          collection platform for live events, festivals, venues, and participating vendors. SKIIP is a technology
+          platform only. SKIIP does not prepare, cook, package, store, or deliver food or beverages. Food and drink
+          products available through the Platform are prepared and fulfilled directly by independent vendors operating
+          at the relevant event.
         </p>
 
         <h2>2. Using SKIIP</h2>
@@ -39,8 +40,8 @@ export default function TermsPage() {
           You agree to use the Platform responsibly and only for lawful purposes. You must not misuse the Platform,
           interfere with its operation, attempt unauthorized access to systems or accounts, submit fraudulent orders
           or payments, impersonate another person, or use the Platform in a way that may negatively affect vendors,
-          attendees, or event operations. We reserve the right to suspend or restrict access where reasonably
-          necessary for operational, safety, security, legal, or abuse-prevention reasons.
+          attendees, or event operations. We reserve the right to suspend or restrict access where reasonably necessary
+          for operational, safety, security, legal, or abuse-prevention reasons.
         </p>
 
         <h2>3. Event and Platform Availability</h2>
@@ -58,14 +59,35 @@ export default function TermsPage() {
 
         <h2>4. Orders and Collection</h2>
         <p>
-          When you place an order through SKIIP, you are placing the order directly with the participating vendor.
-          The vendor is responsible for preparing and fulfilling the order, and you are responsible for collecting the
+          When you place an order through SKIIP, you are placing the order directly with the participating vendor. The
+          vendor is responsible for preparing and fulfilling the order, and you are responsible for collecting the
           order from the designated collection location.
         </p>
         <p>
-          Collection times provided through the Platform are estimates only and may vary depending on vendor
-          preparation times, event demand, operational conditions, or connectivity delays. You are responsible for
-          checking your order upon collection where reasonably possible.
+          Once an order has been marked as ready for collection and the customer has been notified through the
+          Platform, the customer is responsible for collecting the order promptly. Orders not collected within twenty
+          (20) minutes of the ready-for-collection notification may be classified as a Late Collection. Due to food
+          quality, freshness, operational, and event-related considerations, orders classified as a Late Collection may
+          not be eligible for a refund, replacement, or credit, except where required by applicable law.
+        </p>
+        <p>
+          If an order remains uncollected for an extended period, SKIIP and the vendor reserve the right to dispose of,
+          reallocate, or otherwise deal with the order where reasonably necessary for food safety, hygiene, operational,
+          or event management purposes.
+        </p>
+        <p>
+          Collection may be verified through order numbers, phone numbers, timestamps, vendor confirmation, or other
+          operational records. SKIIP may rely on such records as evidence that an order was collected.
+        </p>
+        <p>
+          Customers are responsible for verifying that the order collected matches their order confirmation before
+          leaving the collection area where reasonably possible. Issues reported after leaving the collection area may
+          be more difficult to verify and resolve.
+        </p>
+        <p>
+          SKIIP facilitates digital ordering and collection but does not guarantee immediate preparation, priority
+          preparation, or queue-free collection. Preparation and collection times remain subject to vendor capacity and
+          event conditions.
         </p>
 
         <h2>5. Food, Allergens, and Vendor Responsibility</h2>
@@ -81,9 +103,9 @@ export default function TermsPage() {
 
         <h2>6. Payments</h2>
         <p>
-          Payments made through SKIIP are processed through secure third-party payment providers, including Stripe.
-          By placing an order, you authorize payment for the order value, any applicable taxes, and any clearly
-          disclosed service or processing fees. SKIIP does not store full payment card details.
+          Payments made through SKIIP are processed through secure third-party payment providers, including Stripe. By
+          placing an order, you authorize payment for the order value, any applicable taxes, and any clearly disclosed
+          service or processing fees. SKIIP does not store full payment card details.
         </p>
         <p>
           Payment processing availability may occasionally be affected by banking provider delays, payment processor
@@ -93,14 +115,65 @@ export default function TermsPage() {
         <h2>7. Refunds and Customer Support</h2>
         <p>
           Refund requests relating to incorrect items, missing items, food quality, allergens, or vendor preparation
-          issues may require review directly with the vendor responsible for the order. SKIIP may assist in
-          facilitating customer support and communication where reasonably necessary.
+          issues may require review directly with the vendor responsible for the order. SKIIP may assist in facilitating
+          customer support and communication where reasonably necessary.
         </p>
         <p>
           SKIIP reserves the right to issue refunds, credits, or order adjustments where reasonably appropriate to
           protect customer experience, address duplicate transactions, resolve technical issues, or maintain platform
           trust. Refund decisions may depend on vendor confirmation, platform records, payment processing status, and
           operational circumstances relating to the event.
+        </p>
+        <p>
+          Refunds will not ordinarily be provided for orders classified as a Late Collection under Section 4, including
+          where a customer fails to collect an order within twenty (20) minutes of receiving a ready-for-collection
+          notification, unless otherwise required by applicable law.
+        </p>
+        <p>
+          Menu availability is subject to change. Participating vendors may occasionally sell out of products,
+          ingredients, or menu items after an order is placed. Where an item becomes unavailable, the vendor or SKIIP
+          may offer a substitute, partial refund, full refund, or other reasonable resolution.
+        </p>
+        <p>
+          In assessing refund requests or order disputes, SKIIP may rely upon platform records, payment records, vendor
+          preparation records, collection records, timestamps, communication logs, and other operational data. Such
+          records may be treated as evidence of the relevant transaction and collection activity
+        </p>
+
+        <h2>CUSTOMER CONDUCT</h2>
+        <p>
+          Users must not engage in abusive, threatening, aggressive, discriminatory, or inappropriate behaviour toward
+          event staff, vendors, venue personnel, or SKIIP representatives. Access to the Platform may be restricted or
+          terminated where such behaviour occurs.
+        </p>
+
+        <h2>INTOXICATED CUSTOMERS</h2>
+        <p>
+          Vendors reserve the right to refuse collection, service, or provision of products where required by law or
+          where a customer appears intoxicated, aggressive, abusive, or otherwise presents a safety concern. Refund
+          eligibility in such circumstances shall be determined at SKIIP&apos;s and/or the vendor&apos;s reasonable
+          discretion and subject to applicable law.
+        </p>
+
+        <h2>DEVICE AND CONNECTIVITY RESPONSIBILITY</h2>
+        <p>
+          Customers are responsible for maintaining access to the device used to place an order. SKIIP is not
+          responsible for issues arising from lost devices, depleted batteries, damaged devices, lack of network
+          access, or inability to access order confirmations after an order has been placed.
+        </p>
+
+        <h2>NOTIFICATION DISCLAIMER</h2>
+        <p>
+          Order status updates, SMS/Whatsapp messages, push notifications, emails, and collection alerts are provided
+          as a convenience only. Customers remain responsible for monitoring their order status through the Platform.
+          SKIIP is not liable for delays or failures in third-party notification delivery.
+        </p>
+
+        <h2>EXPANDED LIMITATION OF LIABILITY</h2>
+        <p>
+          SKIIP shall not be liable for loss of enjoyment, missed performances, missed event experiences, travel costs,
+          accommodation costs, indirect losses, or consequential losses arising from delays, vendor issues, collection
+          delays, or platform interruptions.
         </p>
 
         <h2>8. Customer Accounts and Notifications</h2>
@@ -127,8 +200,8 @@ export default function TermsPage() {
 
         <h2>10. Intellectual Property</h2>
         <p>
-          The SKIIP platform, branding, logos, software, systems, and content remain the intellectual property of
-          SKIIP Ltd unless otherwise stated. You may not reproduce, copy, modify, distribute, reverse engineer, or
+          The SKIIP platform, branding, logos, software, systems, and content remain the intellectual property of SKIIP
+          Ltd unless otherwise stated. You may not reproduce, copy, modify, distribute, reverse engineer, or
           commercially exploit any part of the Platform without prior written permission.
         </p>
 
@@ -139,8 +212,8 @@ export default function TermsPage() {
           resulting from delays or interruptions.
         </p>
         <p>
-          SKIIP is not responsible for food preparation or quality, allergen issues, vendor fulfillment failures,
-          event cancellations, venue connectivity issues, or third-party infrastructure failures outside SKIIP&apos;s
+          SKIIP is not responsible for food preparation or quality, allergen issues, vendor fulfillment failures, event
+          cancellations, venue connectivity issues, or third-party infrastructure failures outside SKIIP&apos;s
           reasonable control.
         </p>
         <p>
